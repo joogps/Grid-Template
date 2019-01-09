@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+  <style>
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 25px;
+    padding: 10px;
+  }
+
+  .grid-item {
+    border-radius: 30px;
+    height: 300px;
+    position: relative;
+
+    transform: scale(1);
+    top: 0px;
+    left: 0px;
+    transition: transform 0.25s, top 0.25s, left 0.25s, width 0.25s, height 0.25s;
+  }
+
+  .grid-item:hover {
+    transform: scale(1.025);
+  }
+
+  .grid-contents {
+    position: relative;
+    top: 10%;
+    left: 12%;
+    color: white;
+    font-family: sans-serif;
+    font-size: 30px;
+  }
+</style>
+</head>
+<body>
+  <div class="grid-container"></div>
+
+  <script>
+    let loremipsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget libero vel arcu pharetra finibus. Morbi sem dui, mollis eget sollicitudin ac, tincidunt in ligula. Nulla finibus lorem vitae nisi blandit, nec bibendum nibh tempor. Pellentesque vestibulum, felis ac vehicula venenatis, nisl leo sollicitudin enim, eu porttitor augue ex eget lorem. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque gravida mollis elit. Pellentesque convallis nisi non lectus porttitor, non convallis ligula posuere. Donec eu metus vel risus finibus faucibus.".split(" ");
+
+    var container = $(".grid-container");
+
+    for (var i = 0; i < loremipsum.length; i++){
+      var hue = Math.round(Math.random()*360/45)*45;
+      var item = $("<div></div>").css("background-image", "linear-gradient(to right, hsl("+hue+", 100%, 50%), hsl("+hue+", 100%, 35%))").addClass("grid-item");
+
+      var contents = $("<div></div>").text(loremipsum[i].charAt(0).toUpperCase()+loremipsum[i].substr(1, loremipsum[i].length)).addClass("grid-contents");
+
+      item.append(contents);
+      container.append(item);
+    }
+
+    $(".grid-item").each(function (i, obj){
+      $(this).click(function(){
+        upperleft($(this));
+
+        if ($(this).data("grown") == true)
+          shrink($(this));
+        else
+          grow($(this));
+      });
+    });
+
+    function upperleft(elm){
+      elm.css({"top": -elm.position().top+$(window).scrollTop()+"px", "left": -elm.position().left+"px"});
+    }
+
+    function grow(elm){
+      elm.css({"width": window.innerWidth+"px", "height": window.innerWidth+"px", "z-index": "1"}).data("grown", true);
+    }
+
+    function shrink(elm){
+      elm.css({"width": "100%", "height": "300px", "z-index": "0"}).data("grown", false);
+    }
+  </script>
+</body>
+</html>
