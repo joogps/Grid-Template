@@ -7,7 +7,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-gap: 25px;
-    padding: 10px;
+    padding: 20px;
   }
 
   .grid-item {
@@ -18,7 +18,7 @@
     transform: scale(1);
     top: 0px;
     left: 0px;
-    transition: transform 0.25s, top 0.25s, left 0.25s, width 0.25s, height 0.25s;
+    transition: transform 0.25s, top 0.25s, left 0.25s, width 0.25s, height 0.25s, border-radius 0.25s;
   }
 
   .grid-item:hover {
@@ -65,15 +65,17 @@
     });
 
     function upperleft(elm){
-      elm.css({"top": -elm.position().top+$(window).scrollTop()+"px", "left": -elm.position().left+"px"});
+      elm.css({"top": -elm.position().top-elm.height()+elm.height()/1.025+$(window).scrollTop()+"px", "left": -elm.position().left-elm.width()+elm.width()/1.025+"px"});
     }
 
     function grow(elm){
-      elm.css({"width": window.innerWidth+"px", "height": window.innerWidth+"px", "z-index": "1"}).data("grown", true);
+      elm.css({"width": window.outerWidth+"px", "height": window.outerHeight+"px", "z-index": "1", "border-radius": "0px"}).data("grown", true);
+      $("body").attr({"scroll": "no", "style": "overflow: hidden"});
     }
 
     function shrink(elm){
-      elm.css({"width": "100%", "height": "300px", "z-index": "0"}).data("grown", false);
+      elm.css({"width": "100%", "height": "300px", "z-index": "0", "border-radius": "30px"}).data("grown", false);
+      $("body").attr({"scroll": "yes", "style": "overflow: scroll"});
     }
   </script>
 </body>
