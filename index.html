@@ -69,7 +69,7 @@
     }
 
     function grow(elm){
-      elm.css({"width": window.outerWidth+"px", "height": window.outerHeight+"px", "z-index": "1", "border-radius": "0px"}).data("grown", true);
+      elm.css({"width": window.innerWidth+"px", "height": window.innerHeight+"px", "z-index": "1", "border-radius": "0px"}).data("grown", true);
       $("body").attr({"scroll": "no", "style": "overflow: hidden"});
     }
 
